@@ -282,7 +282,7 @@ https://user-images.githubusercontent.com/84449179/151313325-aaae5143-bda9-4beb-
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/K-Nehal/floor_detection/blob/main/jetson%20nano.jpg)
 
 
 ## Advantages
