@@ -1,6 +1,4 @@
-# floor_detection
-
-# Floor Detection on Yolov5 using Jetson Nano 2gb Developer Kit.
+# Floor-Detection-on-Yolov5-using-Jetson-Nano-2gb-Developer-Kit
 
 Floor detection system which will detect the quality of Floor, identify whether
 its clean or unclean and then recommend the steps to take after identifying the property of the
@@ -106,6 +104,13 @@ AI applications. All Jetson modules and developer kits are supported by JetPack 
 
 • In our model we have used JetPack version 4.6 which is the latest production release and
 supports all Jetson modules.
+
+## Nano-2gb-Developer
+![IMG_20220125_115719](https://user-images.githubusercontent.com/84638162/151315411-89336d18-9dcb-4f22-92ea-0a8a036b6187.jpg)
+
+
+
+
 ## Proposed System
 
    1. Study basics of machine learning and image recognition.
@@ -160,98 +165,84 @@ unclean. We trained it for 149 epochs and achieved an accuracy of
 approximately 93%.
 ## Installation
 
-### Initial Setup
+Initial Configuration
 
-Remove unwanted Applications.
 ```bash
 sudo apt-get remove --purge libreoffice*
 sudo apt-get remove --purge thunderbird*
-```
-### Create Swap file
 
+```
+Create Swap 
 ```bash
-sudo fallocate -l 10.0G /swapfile1
+udo fallocate -l 10.0G /swapfile1
 sudo chmod 600 /swapfile1
 sudo mkswap /swapfile1
 sudo vim /etc/fstab
+# make entry in fstab file
+/swapfile1	swap	swap	defaults	0 0
 ```
-```bash
-#################add line###########
-/swapfile1 swap swap defaults 0 0
-```
-### Cuda Configuration
-
+Cuda env in bashrc
 ```bash
 vim ~/.bashrc
-```
-```bash
-#############add line #############
+
+# add this lines
 export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
-export
-LD_LIBRARY_PATh=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_P
-ATH}}
+export LD_LIBRARY_PATh=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
-```
-```bash
-source ~/.bashrc
-```
-### Udpade a System
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-################pip-21.3.1 setuptools-59.6.0 wheel-0.37.1#############################
 
-```bash 
+```
+Update & Upgrade
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+```
+Install some required Packages
+```bash
 sudo apt install curl
-```
-``` bash 
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-```
-``` bash
 sudo python3 get-pip.py
-```
-```bash
 sudo apt-get install libopenblas-base libopenmpi-dev
-```
+sudo apt-get install python3-dev build-essential autoconf libtool pkg-config python-opengl python-pil python-pyrex python-pyside.qtopengl idle-python2.7 qt4-dev-tools qt4-designer libqtgui4 libqtcore4 libqt4-xml libqt4-test libqt4-script libqt4-network libqt4-dbus python-qt4 python-qt4-gl libgle3 python-dev libssl-dev libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev libfreetype6-dev python3-dev
 
-```bash
+
+vim ~/.bashrc
+####################### add line ####################   
+export OPENBLAS_CORETYPE=ARMV8
+   
+source ~/.bashrc
 sudo pip3 install pillow
+
 ```
+Install Torch
 ```bash
 curl -LO https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl
-```
-```bash
 mv p57jwntv436lfrd78inwl7iml6p13fzh.whl torch-1.8.0-cp36-cp36m-linux_aarch64.whl
-```
-```bash
 sudo pip3 install torch-1.8.0-cp36-cp36m-linux_aarch64.whl
-```
-```bash
+
+#Check Torch, output should be "True" 
 sudo python3 -c "import torch; print(torch.cuda.is_available())"
 ```
-### Installation of torchvision.
-
+Install Torchvision
 ```bash
 git clone --branch v0.9.1 https://github.com/pytorch/vision torchvision
 cd torchvision/
 sudo python3 setup.py install
 ```
-### Clone yolov5 Repositories and make it Compatible with Jetson Nano.
-
+Clone Yolov5 
 ```bash
-cd
 git clone https://github.com/ultralytics/yolov5.git
 cd yolov5/
-```
-
-``` bash
 sudo pip3 install numpy==1.19.4
-history
-##################### comment torch,PyYAML and torchvision in requirement.txt##################################
+
+#comment torch,PyYAML and torchvision in requirement.txt
+
 sudo pip3 install --ignore-installed PyYAML>=5.3.1
 sudo pip3 install -r requirements.txt
+```
+Download weights and Test Yolov5 Installation on USB webcam
+```bash
 sudo python3 detect.py
-sudo python3 detect.py --weights yolov5s.pt --source 0
+sudo python3 detect.py --weights yolov5s.pt  --source 0
 ```
 
 ## Floor Dataset Training
@@ -269,20 +260,17 @@ source '0' for webcam
 ```bash
 !python detect.py --weights best.pt --img 416 --conf 0.1 --source 0
 ```
-## Demo video
 
 
-https://user-images.githubusercontent.com/84449179/151313325-aaae5143-bda9-4beb-a4e6-73f82b17db2f.mp4
-
-
+## Demo
 
 
 
+https://user-images.githubusercontent.com/84638162/151315781-ce556a48-2f21-4818-9c80-255f744bdc7a.mp4
 
 
-## Screenshots
 
-![App Screenshot](https://github.com/K-Nehal/floor_detection/blob/main/jetson%20nano.jpg)
+
 
 
 ## Advantages
